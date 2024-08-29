@@ -1,0 +1,22 @@
+name: Extract and Commit Zip
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Extract zip file
+        run: |
+          unzip yourfile.zip -d extracted_files
+      - name: Commit extracted files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add extracted_files
+          git commit -m "Add extracted files"
+          git push
